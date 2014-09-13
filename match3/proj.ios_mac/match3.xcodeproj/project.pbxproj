@@ -62,6 +62,15 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		72624ACC19C48C2500A27207 /* iPad3 in Resources */ = {isa = PBXBuildFile; fileRef = 72624AC719C48C2500A27207 /* iPad3 */; };
+		72624ACD19C48C2500A27207 /* iPhone4 in Resources */ = {isa = PBXBuildFile; fileRef = 72624AC819C48C2500A27207 /* iPhone4 */; };
+		72624ACE19C48C2500A27207 /* iPhone5 in Resources */ = {isa = PBXBuildFile; fileRef = 72624AC919C48C2500A27207 /* iPhone5 */; };
+		72624ACF19C48C2500A27207 /* iPhone6 in Resources */ = {isa = PBXBuildFile; fileRef = 72624ACA19C48C2500A27207 /* iPhone6 */; };
+		72624AD019C48C2500A27207 /* iPhone6+ in Resources */ = {isa = PBXBuildFile; fileRef = 72624ACB19C48C2500A27207 /* iPhone6+ */; };
+		72624AD319C4999E00A27207 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD119C4999E00A27207 /* GameScene.cpp */; };
+		72624ADB19C49B7E00A27207 /* BackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD519C49B7E00A27207 /* BackgroundLayer.cpp */; };
+		72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */; };
+		72624ADD19C49B7E00A27207 /* UserInterfaceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -260,6 +269,19 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		72624AC719C48C2500A27207 /* iPad3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iPad3; sourceTree = "<group>"; };
+		72624AC819C48C2500A27207 /* iPhone4 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iPhone4; sourceTree = "<group>"; };
+		72624AC919C48C2500A27207 /* iPhone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iPhone5; sourceTree = "<group>"; };
+		72624ACA19C48C2500A27207 /* iPhone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iPhone6; sourceTree = "<group>"; };
+		72624ACB19C48C2500A27207 /* iPhone6+ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "iPhone6+"; sourceTree = "<group>"; };
+		72624AD119C4999E00A27207 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
+		72624AD219C4999E00A27207 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../Classes/GameScene.h; sourceTree = "<group>"; };
+		72624AD519C49B7E00A27207 /* BackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BackgroundLayer.cpp; path = ../Classes/BackgroundLayer.cpp; sourceTree = "<group>"; };
+		72624AD619C49B7E00A27207 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackgroundLayer.h; path = ../Classes/BackgroundLayer.h; sourceTree = "<group>"; };
+		72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObjectsLayer.cpp; path = ../Classes/GameObjectsLayer.cpp; sourceTree = "<group>"; };
+		72624AD819C49B7E00A27207 /* GameObjectsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameObjectsLayer.h; path = ../Classes/GameObjectsLayer.h; sourceTree = "<group>"; };
+		72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInterfaceLayer.cpp; path = ../Classes/UserInterfaceLayer.cpp; sourceTree = "<group>"; };
+		72624ADA19C49B7E00A27207 /* UserInterfaceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInterfaceLayer.h; path = ../Classes/UserInterfaceLayer.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -336,6 +358,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				72624AC219C48B3A00A27207 /* Scenes */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B616D35DE700DB1158 /* HelloWorldScene.h */,
@@ -452,9 +475,69 @@
 			path = ios;
 			sourceTree = SOURCE_ROOT;
 		};
+		72624AC219C48B3A00A27207 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				72624AC619C48B9800A27207 /* Episodes */,
+				72624AC519C48B9000A27207 /* Map */,
+				72624AC419C48B8800A27207 /* Menu */,
+				72624AC319C48B7D00A27207 /* Game */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		72624AC319C48B7D00A27207 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				72624AD419C49B6E00A27207 /* Layers */,
+				72624AD219C4999E00A27207 /* GameScene.h */,
+				72624AD119C4999E00A27207 /* GameScene.cpp */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		72624AC419C48B8800A27207 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		72624AC519C48B9000A27207 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
+		72624AC619C48B9800A27207 /* Episodes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Episodes;
+			sourceTree = "<group>";
+		};
+		72624AD419C49B6E00A27207 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				72624AD519C49B7E00A27207 /* BackgroundLayer.cpp */,
+				72624AD619C49B7E00A27207 /* BackgroundLayer.h */,
+				72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */,
+				72624AD819C49B7E00A27207 /* GameObjectsLayer.h */,
+				72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */,
+				72624ADA19C49B7E00A27207 /* UserInterfaceLayer.h */,
+			);
+			name = Layers;
+			sourceTree = "<group>";
+		};
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				72624AC719C48C2500A27207 /* iPad3 */,
+				72624AC819C48C2500A27207 /* iPhone4 */,
+				72624AC919C48C2500A27207 /* iPhone5 */,
+				72624ACA19C48C2500A27207 /* iPhone6 */,
+				72624ACB19C48C2500A27207 /* iPhone6+ */,
 				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
 				1AFAF8BA16D35E4900DB1158 /* CloseSelected.png */,
 				1AFAF8BB16D35E4900DB1158 /* HelloWorld.png */,
@@ -629,15 +712,20 @@
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
+				72624ACF19C48C2500A27207 /* iPhone6 in Resources */,
+				72624ACC19C48C2500A27207 /* iPad3 in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
+				72624ACE19C48C2500A27207 /* iPhone5 in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
+				72624AD019C48C2500A27207 /* iPhone6+ in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
+				72624ACD19C48C2500A27207 /* iPhone4 in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
@@ -670,7 +758,11 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
+				72624ADB19C49B7E00A27207 /* BackgroundLayer.cpp in Sources */,
+				72624ADD19C49B7E00A27207 /* UserInterfaceLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				72624AD319C4999E00A27207 /* GameScene.cpp in Sources */,
+				72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -764,10 +856,10 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -793,10 +885,10 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
