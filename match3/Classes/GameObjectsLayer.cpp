@@ -21,6 +21,10 @@ USING_NS_CC;
 
 int GameObjectsLayer::slotsWidth  = 6;
 int GameObjectsLayer::slotsHeight = 7;
+int GameObjectsLayer::slotShiftLeft = 60;
+int GameObjectsLayer::slotShiftBottom = 60;
+int GameObjectsLayer::slotSizeWidth = 105.0f;
+int GameObjectsLayer::slotSizeHeight = 111.0f;
 
 // on "init" you need to initialize your instance
 bool GameObjectsLayer ::init()
@@ -42,7 +46,7 @@ bool GameObjectsLayer ::init()
         {
             Cell *cell = Cell::create(column, row);
             cell->setDelegate(this);
-            cell->setPosition(Point(100 + 90.0f * column, 100 + row * 90.0f));
+            cell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + row * slotSizeHeight));
             //cell->getMainImage()->setPosition(Point(100 + 90.0f * column, 100 + row * 90.0f));
             this->addChild(cell, 0);
             line->pushBack(cell);
@@ -106,7 +110,6 @@ void GameObjectsLayer::searchCells(Point point)
 
 void GameObjectsLayer::closeSnake()
 {
-    
     for(int column = 0; column < slotsWidth; ++column)
     {
         int shouldDeleteCountInColumn = 0;
@@ -124,7 +127,7 @@ void GameObjectsLayer::closeSnake()
         {
             Cell *newCell = Cell::create(column, slotsHeight - shouldDeleteCountInColumn + i);
             newCell->setDelegate(this);
-            //newCell->setPosition(Point(100 + 90.0f * column, 100 + (slotsHeight - shouldDeleteCountInColumn + i) * 90.0f));
+            newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + (slotsHeight + i) * slotSizeHeight));
             this->addChild(newCell, 0);
             items.at(column)->pushBack(newCell);
             
@@ -165,13 +168,14 @@ void GameObjectsLayer::closeSnake()
                         Cell *cellForMove = items.at(column)->at(row);
                         cellForMove->setX(column);
                         cellForMove->setY(row - emptySpaceCount - sumEmptySpaces);
-                        cellForMove->setPosition(Point(100 + 90.0f * column, 100 + (row - emptySpaceCount - sumEmptySpaces) * 90.0f));
+                        
+                        Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + (row - emptySpaceCount - sumEmptySpaces) * slotSizeHeight));
+                        cellForMove->runAction(action);
                         items.at(column)->replace(row - emptySpaceCount - sumEmptySpaces, cellForMove);
                         
                         log("move %d to %d %d %d",cellForMove->getType() , row - emptySpaceCount, column, cellForMove->getShouldDelete());
                     }
                 }
-               
             }
             else
             {

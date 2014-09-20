@@ -47,7 +47,10 @@ public:
     
     static int slotsWidth;
     static int slotsHeight;
-    
+    static int slotShiftLeft;
+    static int slotShiftBottom;
+    static int slotSizeWidth;
+    static int slotSizeHeight;
 protected:
     //RootScene *rootScene;
 };

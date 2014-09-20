@@ -23,9 +23,13 @@ bool BackgroundLayer::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     
-    Sprite *pSprite = Sprite::create("background.png");
-    pSprite->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    this->addChild(pSprite, 0);
+    Sprite *topSprite = Sprite::create("top.png");
+    topSprite->setPosition(Point(visibleSize.width/2 + origin.x,  visibleSize.height - origin.y - topSprite->getContentSize().height/2));
+    this->addChild(topSprite, 0);
+    
+    Sprite *grid = Sprite::create("grid.png");
+    grid->setPosition(Point(visibleSize.width/2 + origin.x,  origin.y + grid->getContentSize().height/2));
+    this->addChild(grid, 0);
     
     /*
     auto listener = EventListenerTouchOneByOne::create();

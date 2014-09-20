@@ -38,23 +38,21 @@ bool Cell::init(int x, int y)
     _x = x;
     _y = y;
     
+    _type = arc4random()%4;
+    char numStr[256];
+    sprintf(numStr, "bottle%d.png", _type);
     
     _hightlightSprite = Sprite::create("Selected_cell.png");
     this->addChild(_hightlightSprite, 0);
     _hightlightSprite->setVisible(false);
     
-    _mainImage = Sprite::create("Blue_cell.png");
+    _mainImage = Sprite::create(numStr);
     this->addChild(_mainImage, 1);
     
     
-    
-    _type = arc4random()%3;
-    char numStr[256];
-    sprintf(numStr, "%d", _type);
-    
     auto label = LabelTTF::create(numStr, "Arial", 24);
     label->setPosition(Point(0,0));
-    this->addChild(label,2);
+    //this->addChild(label,2);
     
     
     auto listener = EventListenerTouchOneByOne::create();
