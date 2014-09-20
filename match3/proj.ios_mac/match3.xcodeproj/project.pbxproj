@@ -71,6 +71,7 @@
 		72624ADB19C49B7E00A27207 /* BackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD519C49B7E00A27207 /* BackgroundLayer.cpp */; };
 		72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */; };
 		72624ADD19C49B7E00A27207 /* UserInterfaceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */; };
+		72624AE119C4B1E000A27207 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624ADF19C4B1E000A27207 /* Cell.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -282,6 +283,9 @@
 		72624AD819C49B7E00A27207 /* GameObjectsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameObjectsLayer.h; path = ../Classes/GameObjectsLayer.h; sourceTree = "<group>"; };
 		72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInterfaceLayer.cpp; path = ../Classes/UserInterfaceLayer.cpp; sourceTree = "<group>"; };
 		72624ADA19C49B7E00A27207 /* UserInterfaceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInterfaceLayer.h; path = ../Classes/UserInterfaceLayer.h; sourceTree = "<group>"; };
+		72624ADF19C4B1E000A27207 /* Cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cell.cpp; path = ../Classes/Cell.cpp; sourceTree = "<group>"; };
+		72624AE019C4B1E000A27207 /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cell.h; path = ../Classes/Cell.h; sourceTree = "<group>"; };
+		72624AE219C5A21C00A27207 /* CellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellDelegate.h; path = ../Classes/CellDelegate.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -489,6 +493,7 @@
 		72624AC319C48B7D00A27207 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				72624ADE19C4B15800A27207 /* Objects */,
 				72624AD419C49B6E00A27207 /* Layers */,
 				72624AD219C4999E00A27207 /* GameScene.h */,
 				72624AD119C4999E00A27207 /* GameScene.cpp */,
@@ -520,14 +525,24 @@
 		72624AD419C49B6E00A27207 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
-				72624AD519C49B7E00A27207 /* BackgroundLayer.cpp */,
 				72624AD619C49B7E00A27207 /* BackgroundLayer.h */,
-				72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */,
+				72624AD519C49B7E00A27207 /* BackgroundLayer.cpp */,
 				72624AD819C49B7E00A27207 /* GameObjectsLayer.h */,
-				72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */,
+				72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */,
 				72624ADA19C49B7E00A27207 /* UserInterfaceLayer.h */,
+				72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */,
 			);
 			name = Layers;
+			sourceTree = "<group>";
+		};
+		72624ADE19C4B15800A27207 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				72624AE219C5A21C00A27207 /* CellDelegate.h */,
+				72624AE019C4B1E000A27207 /* Cell.h */,
+				72624ADF19C4B1E000A27207 /* Cell.cpp */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
@@ -764,6 +779,7 @@
 				72624AD319C4999E00A27207 /* GameScene.cpp in Sources */,
 				72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
+				72624AE119C4B1E000A27207 /* Cell.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

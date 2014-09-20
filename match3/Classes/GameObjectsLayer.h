@@ -10,16 +10,28 @@
 #define __QuestGame__GameObjectsLayer__
 
 #include "cocos2d.h"
+#include "Cell.h"
+#include "CellDelegate.h"
+
+USING_NS_CC;
+
+//class Cell;
 //#include "SwitchObjectDelegate.h"
 //#include "CollectObjectDelegate.h"
 
 //class Hero;
 //class RootScene;
 
-class GameObjectsLayer : public cocos2d::Layer//, public CollectObjectDelegate
+class GameObjectsLayer : public cocos2d::Layer, public CellDelegate
 {
     //bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+    int cellType;
+    std::vector<Vector<Cell *>*> items;
+    Vector<Cell *> itemsSnake;
     
+    virtual void activateSnake(Cell *cell);
+    virtual void searchCells(Point point);
+    virtual void closeSnake();
 public:
     
     //cocos2d::Node *content;
@@ -32,6 +44,9 @@ public:
     
     virtual bool init();
     CREATE_FUNC(GameObjectsLayer);
+    
+    static int slotsWidth;
+    static int slotsHeight;
     
 protected:
     //RootScene *rootScene;

@@ -20,7 +20,6 @@ bool BackgroundLayer::init()
         return false;
     }
     
-    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     
