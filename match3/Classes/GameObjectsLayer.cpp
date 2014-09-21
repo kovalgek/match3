@@ -97,7 +97,7 @@ void GameObjectsLayer::searchCells(Point point)
                         
                         for(int i = (int)itemsSnake.size() - 1; i > index; --i)
                         {
-                            cell->setShouldDelete(false);
+                            itemsSnake.at(i)->setShouldDelete(false);
                             itemsSnake.at(i)->setState(Normal);
                             itemsSnake.erase(i);
                         }
@@ -125,7 +125,8 @@ void GameObjectsLayer::closeSnake()
         log("shouldDeleteCountInColumn=%d",shouldDeleteCountInColumn);
         for(int i = 0; i < shouldDeleteCountInColumn; ++i)
         {
-            Cell *newCell = Cell::create(column, slotsHeight - shouldDeleteCountInColumn + i);
+           // break;
+            Cell *newCell = Cell::create(column, slotsHeight - shouldDeleteCountInColumn + i + 1);
             newCell->setDelegate(this);
             newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + (slotsHeight + i) * slotSizeHeight));
             this->addChild(newCell, 0);
@@ -134,7 +135,36 @@ void GameObjectsLayer::closeSnake()
             log("newCell= %d %d",newCell->getX(),newCell->getY());
         }
     }
-    //return;
+    for(int column = 0; column < slotsWidth; ++column)
+    {
+        int i = 0;
+        Vector<Cell *> *line = items.at(column);
+        
+        for (Vector<Cell *>::iterator iter = line->begin(); iter != line->end(); )
+        {
+            Cell *cell = *iter;
+            
+            if(cell->getShouldDelete())
+            {
+                cell->removeFromParent();
+                iter = line->erase(iter);
+            }
+            else
+            {
+                if(i != cell->getY())
+                {
+                    Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight));
+                    cell->runAction(action);
+                    cell->setY(i);
+                }
+                
+                ++iter;
+                ++i;
+            }
+        }
+    }
+    /*
+    return;
     for(int column = 0; column < slotsWidth; ++column)
     {
         int emptySpaceCount = 0;
@@ -199,7 +229,7 @@ void GameObjectsLayer::closeSnake()
             items.at(column)->erase(row);
         }
     }
-    
+    */
     //Action *action = JumpTo::create(
     for(auto cell : itemsSnake)
     {
