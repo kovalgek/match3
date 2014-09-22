@@ -72,6 +72,12 @@
 		72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */; };
 		72624ADD19C49B7E00A27207 /* UserInterfaceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */; };
 		72624AE119C4B1E000A27207 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624ADF19C4B1E000A27207 /* Cell.cpp */; };
+		72AAC45919CEF51900EFA5AF /* CellStacked.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC45719CEF51900EFA5AF /* CellStacked.cpp */; };
+		72AAC45E19CEF53200EFA5AF /* CellUnstacked.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC45C19CEF53200EFA5AF /* CellUnstacked.cpp */; };
+		72AAC46119CEF54600EFA5AF /* CellBomb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC45F19CEF54600EFA5AF /* CellBomb.cpp */; };
+		72AAC46419CEF56800EFA5AF /* CellUnmoved.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC46219CEF56800EFA5AF /* CellUnmoved.cpp */; };
+		72AAC46719CEF5BB00EFA5AF /* CellMoved.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC46519CEF5BB00EFA5AF /* CellMoved.cpp */; };
+		72AAC46B19CF32E500EFA5AF /* CellSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC46919CF32E500EFA5AF /* CellSimple.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -286,6 +292,18 @@
 		72624ADF19C4B1E000A27207 /* Cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cell.cpp; path = ../Classes/Cell.cpp; sourceTree = "<group>"; };
 		72624AE019C4B1E000A27207 /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cell.h; path = ../Classes/Cell.h; sourceTree = "<group>"; };
 		72624AE219C5A21C00A27207 /* CellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellDelegate.h; path = ../Classes/CellDelegate.h; sourceTree = "<group>"; };
+		72AAC45719CEF51900EFA5AF /* CellStacked.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellStacked.cpp; path = ../Classes/CellStacked.cpp; sourceTree = "<group>"; };
+		72AAC45819CEF51900EFA5AF /* CellStacked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellStacked.h; path = ../Classes/CellStacked.h; sourceTree = "<group>"; };
+		72AAC45C19CEF53200EFA5AF /* CellUnstacked.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellUnstacked.cpp; path = ../Classes/CellUnstacked.cpp; sourceTree = "<group>"; };
+		72AAC45D19CEF53200EFA5AF /* CellUnstacked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellUnstacked.h; path = ../Classes/CellUnstacked.h; sourceTree = "<group>"; };
+		72AAC45F19CEF54600EFA5AF /* CellBomb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellBomb.cpp; path = ../Classes/CellBomb.cpp; sourceTree = "<group>"; };
+		72AAC46019CEF54600EFA5AF /* CellBomb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellBomb.h; path = ../Classes/CellBomb.h; sourceTree = "<group>"; };
+		72AAC46219CEF56800EFA5AF /* CellUnmoved.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellUnmoved.cpp; path = ../Classes/CellUnmoved.cpp; sourceTree = "<group>"; };
+		72AAC46319CEF56800EFA5AF /* CellUnmoved.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellUnmoved.h; path = ../Classes/CellUnmoved.h; sourceTree = "<group>"; };
+		72AAC46519CEF5BB00EFA5AF /* CellMoved.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellMoved.cpp; path = ../Classes/CellMoved.cpp; sourceTree = "<group>"; };
+		72AAC46619CEF5BB00EFA5AF /* CellMoved.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellMoved.h; path = ../Classes/CellMoved.h; sourceTree = "<group>"; };
+		72AAC46919CF32E500EFA5AF /* CellSimple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellSimple.cpp; path = ../Classes/CellSimple.cpp; sourceTree = "<group>"; };
+		72AAC46A19CF32E500EFA5AF /* CellSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellSimple.h; path = ../Classes/CellSimple.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -541,6 +559,18 @@
 				72624AE219C5A21C00A27207 /* CellDelegate.h */,
 				72624AE019C4B1E000A27207 /* Cell.h */,
 				72624ADF19C4B1E000A27207 /* Cell.cpp */,
+				72AAC45819CEF51900EFA5AF /* CellStacked.h */,
+				72AAC45719CEF51900EFA5AF /* CellStacked.cpp */,
+				72AAC45C19CEF53200EFA5AF /* CellUnstacked.cpp */,
+				72AAC45D19CEF53200EFA5AF /* CellUnstacked.h */,
+				72AAC46019CEF54600EFA5AF /* CellBomb.h */,
+				72AAC45F19CEF54600EFA5AF /* CellBomb.cpp */,
+				72AAC46219CEF56800EFA5AF /* CellUnmoved.cpp */,
+				72AAC46319CEF56800EFA5AF /* CellUnmoved.h */,
+				72AAC46519CEF5BB00EFA5AF /* CellMoved.cpp */,
+				72AAC46619CEF5BB00EFA5AF /* CellMoved.h */,
+				72AAC46919CF32E500EFA5AF /* CellSimple.cpp */,
+				72AAC46A19CF32E500EFA5AF /* CellSimple.h */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -771,12 +801,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				72AAC46719CEF5BB00EFA5AF /* CellMoved.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
+				72AAC46119CEF54600EFA5AF /* CellBomb.cpp in Sources */,
 				72624ADB19C49B7E00A27207 /* BackgroundLayer.cpp in Sources */,
 				72624ADD19C49B7E00A27207 /* UserInterfaceLayer.cpp in Sources */,
+				72AAC46419CEF56800EFA5AF /* CellUnmoved.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				72AAC46B19CF32E500EFA5AF /* CellSimple.cpp in Sources */,
+				72AAC45919CEF51900EFA5AF /* CellStacked.cpp in Sources */,
 				72624AD319C4999E00A27207 /* GameScene.cpp in Sources */,
+				72AAC45E19CEF53200EFA5AF /* CellUnstacked.cpp in Sources */,
 				72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 				72624AE119C4B1E000A27207 /* Cell.cpp in Sources */,

@@ -13,6 +13,20 @@
 
 USING_NS_CC;
 
+enum CellType
+{
+    Bottle0,
+    Bottle1,
+    Bottle2,
+    Bottle3,
+    Bottle4,
+    Bomb0,
+    Bomb1,
+    Bomb2,
+    Wall,
+    Enemy
+};
+
 enum CellStates
 {
     Normal,
@@ -24,26 +38,26 @@ class CellDelegate;
 class Cell : public Node
 {
 public:
-    static Cell *create(int x, int y);
-    virtual bool init(int x, int y);
-    //CREATE_FUNC(Cell);
-    CC_SYNTHESIZE_READONLY(Sprite *, _mainImage, MainImage);
-    CC_SYNTHESIZE_READONLY(Sprite *, _hightlightSprite, HightlightSprite);
+    static Cell *create(int x, int y, CellType type);
+    virtual bool init(int x, int y, CellType type);
+
+    CC_SYNTHESIZE_READONLY(Sprite *, _mainSprite, MainSprite);
+    CC_SYNTHESIZE_READONLY(Sprite *, _inSnakeSprite, InSnakeSprite);
+    CC_SYNTHESIZE_READONLY(Sprite *, _willExplodeSprite, WillExplodeSprite);
+    
     CC_SYNTHESIZE(int, _x, X);
     CC_SYNTHESIZE(int, _y, Y);
-    CC_SYNTHESIZE_READONLY(int, _type, Type);
-    //CC_SYNTHESIZE(int, _state, State);
-    CC_SYNTHESIZE(CellDelegate *, _delegate, Delegate);
+    
+    CC_SYNTHESIZE_READONLY(CellType, _type, Type);
     
     CC_SYNTHESIZE(bool, _shouldDelete, ShouldDelete);
     
     void setState(CellStates var);
     CellStates getState();
-private:
+protected:
     CellStates state;
-    //Sprite *image;
+private:
     Sprite *selectImage;
-    
 };
 
 #endif /* defined(__match3__Cell__) */

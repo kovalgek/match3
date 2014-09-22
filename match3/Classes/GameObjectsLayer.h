@@ -19,15 +19,13 @@ USING_NS_CC;
 //#include "SwitchObjectDelegate.h"
 //#include "CollectObjectDelegate.h"
 
-//class Hero;
-//class RootScene;
-
 class GameObjectsLayer : public cocos2d::Layer, public CellDelegate
 {
     //bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     int cellType;
     std::vector<Vector<Cell *>*> items;
     Vector<Cell *> itemsSnake;
+    CellType snakeType;
     
     virtual void activateSnake(Cell *cell);
     virtual void searchCells(Point point);
@@ -51,6 +49,9 @@ public:
     static int slotShiftBottom;
     static int slotSizeWidth;
     static int slotSizeHeight;
+    
+    static int minSnakeSizeActivation;
+    
 protected:
     //RootScene *rootScene;
 };

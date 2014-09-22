@@ -8,6 +8,7 @@
 
 #include "GameObjectsLayer.h"
 #include "Cell.h"
+#include "CellSimple.h"
 
 /*
 #include "Hero.h"
@@ -25,6 +26,16 @@ int GameObjectsLayer::slotShiftLeft = 60;
 int GameObjectsLayer::slotShiftBottom = 60;
 int GameObjectsLayer::slotSizeWidth = 105.0f;
 int GameObjectsLayer::slotSizeHeight = 111.0f;
+
+int GameObjectsLayer::minSnakeSizeActivation = 3;
+
+enum SnakeActivation
+{
+    MinSnakeSize = 3,
+    BombActivation0 = 4,
+    BombActivation1 = 7,
+    BombActivation2 = 14
+};
 
 // on "init" you need to initialize your instance
 bool GameObjectsLayer ::init()
@@ -44,10 +55,10 @@ bool GameObjectsLayer ::init()
         
         for(int row = 0; row < slotsHeight; ++row)
         {
-            Cell *cell = Cell::create(column, row);
+            int bottle = arc4random()%4;
+            CellStacked *cell = (CellStacked *)Cell::create(column, row, (CellType)bottle);
             cell->setDelegate(this);
             cell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + row * slotSizeHeight));
-            //cell->getMainImage()->setPosition(Point(100 + 90.0f * column, 100 + row * 90.0f));
             this->addChild(cell, 0);
             line->pushBack(cell);
         }
@@ -60,6 +71,7 @@ bool GameObjectsLayer ::init()
 void GameObjectsLayer::activateSnake(Cell *cell)
 {
     itemsSnake.pushBack(cell);
+    snakeType = cell->getType();
 }
 
 void GameObjectsLayer::searchCells(Point point)
@@ -72,36 +84,111 @@ void GameObjectsLayer::searchCells(Point point)
         {
             Cell *cell = line->at(row);
         
-            Size size = cell->getMainImage()->getContentSize();
+            Size size = cell->getMainSprite()->getContentSize();
             Rect rect = Rect(cell->getPosition().x - size.width * 0.5f, cell->getPosition().y - size.height * 0.5f, size.width, size.height);
 
-            if (rect.containsPoint(point) && itemsSnake.back()->getType() == cell->getType())
+            if (rect.containsPoint(point) && ((snakeType == cell->getType()) ||
+                                              (snakeType >= Bomb0 && snakeType <= Bomb2) ||
+                                              (cell->getType() >= Bomb0 && cell->getType() <= Bomb2)))
             {
-                if(cell->getState() == Normal)
+                int index = (int)itemsSnake.getIndex(cell);
+                
+                if(index == -1)
                 {
                     if(abs(itemsSnake.back()->getX() - cell->getX()) <= 1 &&
                        abs(itemsSnake.back()->getY() - cell->getY()) <= 1)
                     {
-                        cell->setShouldDelete(true);
-                        cell->setState(Activated);
-                        itemsSnake.pushBack(cell);
-                    }
-                }
-                else if(cell->getState() == Activated)
-                {
-                    int index = (int)itemsSnake.getIndex(cell);
-                    
-                    if(index >= 0 && index <= itemsSnake.size() - 1)
-                    {
-                        Vector<Cell *>::iterator iter;
+                        if(cell->getType() >= Bottle0 && cell->getType() <= Bottle4) // если цепочка неопределенная, то даем ей тип
+                            snakeType = cell->getType();
                         
-                        for(int i = (int)itemsSnake.size() - 1; i > index; --i)
+                        cell->setShouldDelete(true);
+                        cell->getInSnakeSprite()->setVisible(true);
+                        //cell->setState(Activated);
+                        itemsSnake.pushBack(cell);
+                        
+                        for(Cell *potentialBombCell : itemsSnake)
                         {
-                            itemsSnake.at(i)->setShouldDelete(false);
-                            itemsSnake.at(i)->setState(Normal);
-                            itemsSnake.erase(i);
+                            if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() >= MinSnakeSize)
+                            {
+                                for(int columnShift = -1; columnShift <= 1; ++columnShift)
+                                {
+                                    for(int rowShift = -1; rowShift <= 1; ++rowShift)
+                                    {
+                                        if((potentialBombCell->getX() + columnShift >= 0 && potentialBombCell->getX() + columnShift < items.size()) &&
+                                           (potentialBombCell->getY() + rowShift >= 0 && potentialBombCell->getY() + rowShift < items.at(column)->size()))
+                                        {
+                                            Cell *cellForBomb = items.at(potentialBombCell->getX() + columnShift)->at(potentialBombCell->getY() + rowShift);
+                                            cellForBomb->setShouldDelete(true);
+                                            cellForBomb->getWillExplodeSprite()->setVisible(true);
+                                            //cellForBomb->setState(Activated);
+                                            log("cellForBomb=%d %d",cellForBomb->getX(),cellForBomb->getY());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    log("AHTING");
+                }
+                else
+                {
+                    // идем по отделившемуся хвосту змейки и деактивируем бомбы, удаление отменяем
+                    log("index=%d",index);
+                    Vector<Cell *>::iterator iter;
+                    
+                    for(int i = (int)itemsSnake.size() - 1; i > index; --i)
+                    {
+                        if(itemsSnake.at(i)->getType() == Bomb0)
+                        {
+                            for(int columnShift = -1; columnShift <= 1; ++columnShift)
+                            {
+                                for(int rowShift = -1; rowShift <= 1; ++rowShift)
+                                {
+                                    if((itemsSnake.at(i)->getX() + columnShift >= 0 && itemsSnake.at(i)->getX() + columnShift < items.size()) &&
+                                       (itemsSnake.at(i)->getY() + rowShift >= 0 && itemsSnake.at(i)->getY() + rowShift < items.at(column)->size()))
+                                    {
+                                        Cell *cellForBomb = items.at(itemsSnake.at(i)->getX() + columnShift)->at(itemsSnake.at(i)->getY() + rowShift);
+                                        //if(!itemsSnake.contains(cellForBomb))
+                                        {
+                                            cellForBomb->setShouldDelete(false);
+                                            cellForBomb->getWillExplodeSprite()->setVisible(false);
+                                            //cellForBomb->setState(Normal);
+                                            log("cellDelBomb=%d %d",cellForBomb->getX(),cellForBomb->getY());
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                        log("i=%d itemsSnake.at(i)Type=%d",i,itemsSnake.at(i)->getType());
+                        itemsSnake.at(i)->getInSnakeSprite()->setVisible(false);
+                        itemsSnake.at(i)->setShouldDelete(false);
+                        //itemsSnake.at(i)->setState(Normal);
+                        itemsSnake.erase(i);
+                    }
+                    
+                    // если в змейке есть бомбы и змейка стала маленькой, то деактивируем их
+                    for(Cell *potentialBombCell : itemsSnake)
+                    {
+                        if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() < MinSnakeSize)
+                        {
+                            for(int columnShift = -1; columnShift <= 1; ++columnShift)
+                            {
+                                for(int rowShift = -1; rowShift <= 1; ++rowShift)
+                                {
+                                    if((potentialBombCell->getX() + columnShift >= 0 && potentialBombCell->getX() + columnShift < items.size()) &&
+                                       (potentialBombCell->getY() + rowShift >= 0 && potentialBombCell->getY() + rowShift < items.at(column)->size()))
+                                    {
+                                        Cell *cellForBomb = items.at(potentialBombCell->getX() + columnShift)->at(potentialBombCell->getY() + rowShift);
+                                        cellForBomb->setShouldDelete(false);
+                                        cellForBomb->getWillExplodeSprite()->setVisible(false);
+                                    }
+                                }
+                            }
                         }
                     }
+                    
                 }
             }
         }
@@ -110,58 +197,87 @@ void GameObjectsLayer::searchCells(Point point)
 
 void GameObjectsLayer::closeSnake()
 {
-    for(int column = 0; column < slotsWidth; ++column)
+    if(itemsSnake.size() >= MinSnakeSize)
     {
-        int shouldDeleteCountInColumn = 0;
-        for(int row = 0; row < slotsHeight; ++row)
+        CellStacked *lastCell = (CellStacked *)itemsSnake.back();
+        
+        // add new
+        for(int column = 0; column < slotsWidth; ++column)
         {
-            Cell *cell = items.at(column)->at(row);
-            if(cell->getShouldDelete())
+            int shouldDeleteCountInColumn = 0;
+            
+            for(Cell *cell : *items.at(column))
             {
-                log("cel should delete=%d %d",cell->getX(),cell->getY());
-                ++shouldDeleteCountInColumn;
+                if(cell->getShouldDelete())
+                {
+                    ++shouldDeleteCountInColumn;
+                }
+            }
+            
+            if(lastCell->getX() == column && itemsSnake.size() >= BombActivation0)
+            {
+                --shouldDeleteCountInColumn;;
+                
+                CellStacked *newCell = (CellStacked *)Cell::create(column, lastCell->getY(), (CellType)Bomb0);
+                newCell->setDelegate(this);
+                newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + lastCell->getY() * slotSizeHeight));
+                this->addChild(newCell, 0);
+                items.at(column)->replace(lastCell->getY(), newCell);
+                
+                lastCell->removeFromParent();
+            }
+            
+            for(int i = 0; i < shouldDeleteCountInColumn; ++i)
+            {
+                int bottle = arc4random()%4;
+                CellStacked *newCell = (CellStacked *)Cell::create(column, slotsHeight - shouldDeleteCountInColumn + i + 1, (CellType)bottle);
+                newCell->setDelegate(this);
+                newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + (slotsHeight + i) * slotSizeHeight));
+                this->addChild(newCell, 0);
+                items.at(column)->pushBack(newCell);
             }
         }
-        log("shouldDeleteCountInColumn=%d",shouldDeleteCountInColumn);
-        for(int i = 0; i < shouldDeleteCountInColumn; ++i)
+
+        
+        // erase and move slots
+        for(int column = 0; column < slotsWidth; ++column)
         {
-           // break;
-            Cell *newCell = Cell::create(column, slotsHeight - shouldDeleteCountInColumn + i + 1);
-            newCell->setDelegate(this);
-            newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + (slotsHeight + i) * slotSizeHeight));
-            this->addChild(newCell, 0);
-            items.at(column)->pushBack(newCell);
+            int i = 0;
+            Vector<Cell *> *line = items.at(column);
             
-            log("newCell= %d %d",newCell->getX(),newCell->getY());
+            for (Vector<Cell *>::iterator iter = line->begin(); iter != line->end();)
+            {
+                Cell *cell = *iter;
+                
+                if(cell->getShouldDelete())
+                {
+                    cell->removeFromParent();
+                    iter = line->erase(iter);
+                }
+                else
+                {
+                    if(i != cell->getY())
+                    {
+                        Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight));
+                        cell->runAction(action);
+                        cell->setY(i);
+                    }
+                    
+                    ++iter;
+                    ++i;
+                }
+            }
         }
     }
+    
+    log("AHT");
     for(int column = 0; column < slotsWidth; ++column)
     {
-        int i = 0;
-        Vector<Cell *> *line = items.at(column);
-        
-        for (Vector<Cell *>::iterator iter = line->begin(); iter != line->end(); )
+        for(Cell *cell : *items.at(column))
         {
-            Cell *cell = *iter;
-            
-            if(cell->getShouldDelete())
-            {
-                cell->removeFromParent();
-                iter = line->erase(iter);
-            }
-            else
-            {
-                if(i != cell->getY())
-                {
-                    Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight));
-                    cell->runAction(action);
-                    cell->setY(i);
-                }
-                
-                ++iter;
-                ++i;
-            }
+            log("x=%d y=%d",cell->getX(),cell->getY());
         }
+        log("\n");
     }
     /*
     return;
