@@ -13,7 +13,9 @@
 
 class CellBomb : public CellStacked
 {
-    //void ApplyEffect();
+public:
+    void activate(std::vector<Vector<Cell *>*> *items, bool activate);
+   // void deactivate();
 };
 
 #endif /* defined(__match3__CellBomb__) */

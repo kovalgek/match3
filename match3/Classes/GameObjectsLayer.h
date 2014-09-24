@@ -26,6 +26,7 @@ class GameObjectsLayer : public cocos2d::Layer, public CellDelegate
     std::vector<Vector<Cell *>*> items;
     Vector<Cell *> itemsSnake;
     CellType snakeType;
+    //void activateSimpleBomb(bool activate);
     
     virtual void activateSnake(Cell *cell);
     virtual void searchCells(Point point);

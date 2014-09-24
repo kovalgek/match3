@@ -9,7 +9,7 @@
 #include "GameObjectsLayer.h"
 #include "Cell.h"
 #include "CellSimple.h"
-
+#include "CellBomb.h"
 /*
 #include "Hero.h"
 #include "RootScene.h"
@@ -98,7 +98,7 @@ void GameObjectsLayer::searchCells(Point point)
                     if(abs(itemsSnake.back()->getX() - cell->getX()) <= 1 &&
                        abs(itemsSnake.back()->getY() - cell->getY()) <= 1)
                     {
-                        if(cell->getType() >= Bottle0 && cell->getType() <= Bottle4) // если цепочка неопределенная, то даем ей тип
+                        if(snakeType >= Bomb0 && snakeType <= Bomb2) // если начали с бомбы, то заем змейке тип
                             snakeType = cell->getType();
                         
                         cell->setShouldDelete(true);
@@ -106,33 +106,24 @@ void GameObjectsLayer::searchCells(Point point)
                         //cell->setState(Activated);
                         itemsSnake.pushBack(cell);
                         
+                        // активация бомб
                         for(Cell *potentialBombCell : itemsSnake)
                         {
                             if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() >= MinSnakeSize)
                             {
-                                for(int columnShift = -1; columnShift <= 1; ++columnShift)
-                                {
-                                    for(int rowShift = -1; rowShift <= 1; ++rowShift)
-                                    {
-                                        if((potentialBombCell->getX() + columnShift >= 0 && potentialBombCell->getX() + columnShift < items.size()) &&
-                                           (potentialBombCell->getY() + rowShift >= 0 && potentialBombCell->getY() + rowShift < items.at(column)->size()))
-                                        {
-                                            Cell *cellForBomb = items.at(potentialBombCell->getX() + columnShift)->at(potentialBombCell->getY() + rowShift);
-                                            cellForBomb->setShouldDelete(true);
-                                            cellForBomb->getWillExplodeSprite()->setVisible(true);
-                                            //cellForBomb->setState(Activated);
-                                            log("cellForBomb=%d %d",cellForBomb->getX(),cellForBomb->getY());
-                                        }
-                                    }
-                                }
+                                CellBomb *cellBomb = (CellBomb *)potentialBombCell;
+                                cellBomb->activate(&items, true);
                             }
                         }
-                        
                     }
                     log("AHTING");
                 }
                 else
                 {
+                    // если начинали с бомбы и вернулись обратно, то сбрасываем тип
+                    if(itemsSnake.size() == 1 && itemsSnake.back()->getType() >= Bomb0 && itemsSnake.back()->getType() <= Bomb2)
+                        snakeType = itemsSnake.back()->getType();
+                    
                     // идем по отделившемуся хвосту змейки и деактивируем бомбы, удаление отменяем
                     log("index=%d",index);
                     Vector<Cell *>::iterator iter;
@@ -141,25 +132,8 @@ void GameObjectsLayer::searchCells(Point point)
                     {
                         if(itemsSnake.at(i)->getType() == Bomb0)
                         {
-                            for(int columnShift = -1; columnShift <= 1; ++columnShift)
-                            {
-                                for(int rowShift = -1; rowShift <= 1; ++rowShift)
-                                {
-                                    if((itemsSnake.at(i)->getX() + columnShift >= 0 && itemsSnake.at(i)->getX() + columnShift < items.size()) &&
-                                       (itemsSnake.at(i)->getY() + rowShift >= 0 && itemsSnake.at(i)->getY() + rowShift < items.at(column)->size()))
-                                    {
-                                        Cell *cellForBomb = items.at(itemsSnake.at(i)->getX() + columnShift)->at(itemsSnake.at(i)->getY() + rowShift);
-                                        //if(!itemsSnake.contains(cellForBomb))
-                                        {
-                                            cellForBomb->setShouldDelete(false);
-                                            cellForBomb->getWillExplodeSprite()->setVisible(false);
-                                            //cellForBomb->setState(Normal);
-                                            log("cellDelBomb=%d %d",cellForBomb->getX(),cellForBomb->getY());
-                                        }
-                                    }
-                                }
-                            }
-                            
+                            CellBomb *cellBomb = (CellBomb *)itemsSnake.at(i);
+                            cellBomb->activate(&items, false);
                         }
                         log("i=%d itemsSnake.at(i)Type=%d",i,itemsSnake.at(i)->getType());
                         itemsSnake.at(i)->getInSnakeSprite()->setVisible(false);
@@ -173,22 +147,10 @@ void GameObjectsLayer::searchCells(Point point)
                     {
                         if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() < MinSnakeSize)
                         {
-                            for(int columnShift = -1; columnShift <= 1; ++columnShift)
-                            {
-                                for(int rowShift = -1; rowShift <= 1; ++rowShift)
-                                {
-                                    if((potentialBombCell->getX() + columnShift >= 0 && potentialBombCell->getX() + columnShift < items.size()) &&
-                                       (potentialBombCell->getY() + rowShift >= 0 && potentialBombCell->getY() + rowShift < items.at(column)->size()))
-                                    {
-                                        Cell *cellForBomb = items.at(potentialBombCell->getX() + columnShift)->at(potentialBombCell->getY() + rowShift);
-                                        cellForBomb->setShouldDelete(false);
-                                        cellForBomb->getWillExplodeSprite()->setVisible(false);
-                                    }
-                                }
-                            }
+                            CellBomb *cellBomb = (CellBomb *)potentialBombCell;
+                            cellBomb->activate(&items, false);
                         }
                     }
-                    
                 }
             }
         }
@@ -218,7 +180,7 @@ void GameObjectsLayer::closeSnake()
             {
                 --shouldDeleteCountInColumn;;
                 
-                CellStacked *newCell = (CellStacked *)Cell::create(column, lastCell->getY(), (CellType)Bomb0);
+                CellBomb *newCell = (CellBomb *)Cell::create(column, lastCell->getY(), (CellType)Bomb0);
                 newCell->setDelegate(this);
                 newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + lastCell->getY() * slotSizeHeight));
                 this->addChild(newCell, 0);
