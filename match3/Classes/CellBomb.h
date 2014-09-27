@@ -13,9 +13,17 @@
 
 class CellBomb : public CellStacked
 {
+    CellBomb *prev;
+    CellBomb *next;
+    
+    Vector<Cell *> activatedItems;
+    
+    bool activated;
+    bool wasActivatedByChain;
 public:
-    void activate(std::vector<Vector<Cell *>*> *items, bool activate);
-   // void deactivate();
+    void activate(std::vector<Vector<Cell *>*> *items, Vector<Cell *> *itemsSnake, bool activatedByChain);
+    void deactivate();
+    CC_SYNTHESIZE_READONLY(bool, _wasActivatedByChain, WasActivatedByChain);
 };
 
 #endif /* defined(__match3__CellBomb__) */

@@ -55,9 +55,12 @@ bool Cell::init(int x, int y, CellType type)
     this->addChild(_inSnakeSprite, 0);
     _inSnakeSprite->setVisible(false);
     
-    //auto label = LabelTTF::create(numStr, "Arial", 24);
-    //label->setPosition(Point(0,0));
-    //this->addChild(label,2);
+    char qwe[256];
+    sprintf(qwe, "%d,%d", _x,_y);
+
+    auto label = LabelTTF::create(qwe, "Arial", 14);
+    label->setPosition(Point(-40,40));
+    this->addChild(label,2);
     
     return true;
 }

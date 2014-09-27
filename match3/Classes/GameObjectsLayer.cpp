@@ -32,7 +32,7 @@ int GameObjectsLayer::minSnakeSizeActivation = 3;
 enum SnakeActivation
 {
     MinSnakeSize = 3,
-    BombActivation0 = 4,
+    BombActivation0 = 7,
     BombActivation1 = 7,
     BombActivation2 = 14
 };
@@ -56,7 +56,15 @@ bool GameObjectsLayer ::init()
         for(int row = 0; row < slotsHeight; ++row)
         {
             int bottle = arc4random()%4;
-            CellStacked *cell = (CellStacked *)Cell::create(column, row, (CellType)bottle);
+            
+            CellStacked *cell = NULL;
+            
+            if((column == 3 && (row == 4 || row == 5)) ||
+                (column == 4 && row == 6))
+                cell = (CellStacked *)Cell::create(column, row, (CellType)Bomb0);
+            else
+                cell = (CellStacked *)Cell::create(column, row, (CellType)bottle);
+            
             cell->setDelegate(this);
             cell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + row * slotSizeHeight));
             this->addChild(cell, 0);
@@ -109,10 +117,10 @@ void GameObjectsLayer::searchCells(Point point)
                         // активация бомб
                         for(Cell *potentialBombCell : itemsSnake)
                         {
-                            if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() >= MinSnakeSize)
+                            if(itemsSnake.size() >= MinSnakeSize && potentialBombCell->getType() == Bomb0)
                             {
                                 CellBomb *cellBomb = (CellBomb *)potentialBombCell;
-                                cellBomb->activate(&items, true);
+                                cellBomb->activate(&items, &itemsSnake, true);
                             }
                         }
                     }
@@ -133,7 +141,8 @@ void GameObjectsLayer::searchCells(Point point)
                         if(itemsSnake.at(i)->getType() == Bomb0)
                         {
                             CellBomb *cellBomb = (CellBomb *)itemsSnake.at(i);
-                            cellBomb->activate(&items, false);
+                            if(cellBomb->getWasActivatedByChain())
+                                cellBomb->deactivate();
                         }
                         log("i=%d itemsSnake.at(i)Type=%d",i,itemsSnake.at(i)->getType());
                         itemsSnake.at(i)->getInSnakeSprite()->setVisible(false);
@@ -148,7 +157,8 @@ void GameObjectsLayer::searchCells(Point point)
                         if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() < MinSnakeSize)
                         {
                             CellBomb *cellBomb = (CellBomb *)potentialBombCell;
-                            cellBomb->activate(&items, false);
+                            if(cellBomb->getWasActivatedByChain())
+                                cellBomb->deactivate();
                         }
                     }
                 }
@@ -213,6 +223,7 @@ void GameObjectsLayer::closeSnake()
                 
                 if(cell->getShouldDelete())
                 {
+                    log("delete cell %d %d",cell->getX(),cell->getY());
                     cell->removeFromParent();
                     iter = line->erase(iter);
                 }
@@ -232,14 +243,14 @@ void GameObjectsLayer::closeSnake()
         }
     }
     
-    log("AHT");
+    //log("AHT");
     for(int column = 0; column < slotsWidth; ++column)
     {
         for(Cell *cell : *items.at(column))
         {
-            log("x=%d y=%d",cell->getX(),cell->getY());
+            //log("x=%d y=%d",cell->getX(),cell->getY());
         }
-        log("\n");
+        //log("\n");
     }
     /*
     return;
