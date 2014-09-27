@@ -50,11 +50,12 @@ bool Cell::init(int x, int y, CellType type)
     _y = y;
     
     _willExplodeSprite = Sprite::create("Selected_cell.png");
-    this->addChild(_willExplodeSprite, 0);
+    this->addChild(_willExplodeSprite, 1);
     _willExplodeSprite->setVisible(false);
     
     _inSnakeSprite = Sprite::create("Green_cell.png");
-    this->addChild(_inSnakeSprite, 0);
+    _inSnakeSprite->setOpacity(128);
+    this->addChild(_inSnakeSprite, 2);
     _inSnakeSprite->setVisible(false);
     
     char qwe[256];
@@ -62,22 +63,9 @@ bool Cell::init(int x, int y, CellType type)
 
     auto label = LabelTTF::create(qwe, "Arial", 14);
     label->setPosition(Point(-40,40));
-    this->addChild(label,2);
+    //this->addChild(label,2);
     
     return true;
 }
 
-CellStates Cell::getState()
-{
-    return state;
-}
-
-void Cell::setState(CellStates var)
-{
-    state = var;
-    if(state == Activated)
-        _inSnakeSprite->setVisible(true);
-    else if(state == Normal)
-        _inSnakeSprite->setVisible(false);
-}
 

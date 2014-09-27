@@ -52,10 +52,6 @@ public:
     
     CC_SYNTHESIZE(bool, _shouldDelete, ShouldDelete);
     
-    void setState(CellStates var);
-    CellStates getState();
-protected:
-    CellStates state;
 private:
     Sprite *selectImage;
 };

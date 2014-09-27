@@ -14,12 +14,16 @@
 class CellStacked : public Cell
 {
 public:
-    //static Cell *create(int x, int y);
-    //virtual bool init(int x, int y);
     virtual bool init(int x, int y, CellType type);
-    
     CC_SYNTHESIZE(CellDelegate *, _delegate, Delegate);
-private:
+    
+    CC_SYNTHESIZE(Sprite *, _arrowSprite, ArrowSprite);
+    
+    void setState(CellStates var);
+    CellStates getState();
+
+protected:
+    CellStates state;
 };
 
 #endif /* defined(__match3__CellStacked__) */

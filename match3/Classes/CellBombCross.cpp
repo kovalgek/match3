@@ -11,6 +11,7 @@
 
 void CellBombCross::activate(std::vector<Vector<Cell *>*> *items, Vector<Cell *> *itemsSnake, bool activatedByChain)
 {
+    
     if(!activated)
     {
         activated = true;

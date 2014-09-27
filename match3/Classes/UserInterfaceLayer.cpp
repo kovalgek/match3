@@ -28,7 +28,11 @@ bool UserInterfaceLayer::init()
         return false;
     }
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    //Point origin = Director::getInstance()->getVisibleOrigin();
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    
+    Sprite *topSprite = Sprite::create("top.png");
+    topSprite->setPosition(Point(visibleSize.width/2 + origin.x,  visibleSize.height - origin.y - topSprite->getContentSize().height/2));
+    this->addChild(topSprite, 0);
     
     /*
     Layout *layout = Layout::create();

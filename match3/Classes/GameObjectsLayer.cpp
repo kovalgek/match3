@@ -20,12 +20,12 @@
 */
 USING_NS_CC;
 
-int GameObjectsLayer::slotsWidth  = 6;
-int GameObjectsLayer::slotsHeight = 7;
-int GameObjectsLayer::slotShiftLeft = 60;
-int GameObjectsLayer::slotShiftBottom = 60;
-int GameObjectsLayer::slotSizeWidth = 105.0f;
-int GameObjectsLayer::slotSizeHeight = 111.0f;
+int GameObjectsLayer::slotsWidth  = 7;
+int GameObjectsLayer::slotsHeight = 8;
+int GameObjectsLayer::slotShiftLeft = 52;
+int GameObjectsLayer::slotShiftBottom = 50;
+int GameObjectsLayer::slotSizeWidth = 91.0f;
+int GameObjectsLayer::slotSizeHeight = 91.0f;
 
 int GameObjectsLayer::minSnakeSizeActivation = 3;
 
@@ -67,7 +67,7 @@ bool GameObjectsLayer ::init()
             
             cell->setDelegate(this);
             cell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + row * slotSizeHeight));
-            this->addChild(cell, 0);
+            this->addChild(cell, 1);
             line->pushBack(cell);
         }
         items.push_back(line);
@@ -78,6 +78,7 @@ bool GameObjectsLayer ::init()
 
 void GameObjectsLayer::activateSnake(Cell *cell)
 {
+    cell->setLocalZOrder(100);
     itemsSnake.pushBack(cell);
     snakeType = cell->getType();
 }
@@ -110,8 +111,46 @@ void GameObjectsLayer::searchCells(Point point)
                             snakeType = cell->getType();
                         
                         cell->setShouldDelete(true);
-                        cell->getInSnakeSprite()->setVisible(true);
-                        //cell->setState(Activated);
+                        //cell->getInSnakeSprite()->setVisible(true);
+                        
+                        
+                        
+                        Sprite *_arrowSprite = ((CellStacked *)cell)->getArrowSprite();
+                        //this->addChild(_arrowSprite,0);
+                        
+                        if(itemsSnake.back()->getY() == cell->getY())
+                        {
+                            if(itemsSnake.back()->getX() > cell->getX())
+                                _arrowSprite->setRotation(180.0f);
+                            else
+                                _arrowSprite->setRotation(0.0f);
+                        }
+                        else if(itemsSnake.back()->getY() < cell->getY())
+                        {
+                            if(itemsSnake.back()->getX() == cell->getX())
+                                _arrowSprite->setRotation(270.0f);
+                            else if(itemsSnake.back()->getX() > cell->getX())
+                                _arrowSprite->setRotation(270.0f - 45.0f);
+                            else
+                                _arrowSprite->setRotation(270.0f + 45.0f);
+                        }
+                        else
+                        {
+                            if(itemsSnake.back()->getX() == cell->getX())
+                                _arrowSprite->setRotation(90.0f);
+                            else if(itemsSnake.back()->getX() < cell->getX())
+                                _arrowSprite->setRotation(90.0f - 45.0f);
+                            else
+                                _arrowSprite->setRotation(90.0f + 45.0f);
+                        }
+                        cell->setLocalZOrder(100 - (int)itemsSnake.size());
+                        log("order=%d",cell->getOrderOfArrival());
+                       // ((CellStacked *)cell)->setArrowSprite(_arrowSprite);
+                        
+                        
+                        ((CellStacked *)cell)->setState(Activated);
+                        
+                        
                         itemsSnake.pushBack(cell);
                         
                         // активация бомб
@@ -122,11 +161,12 @@ void GameObjectsLayer::searchCells(Point point)
                                 potentialBombCell->getType() <= Bomb2))
                             {
                                 CellBomb *cellBomb = (CellBomb *)potentialBombCell;
+                                log("cellBomb=%d",cellBomb->getType());
                                 cellBomb->activate(&items, &itemsSnake, true);
                             }
                         }
                     }
-                    log("AHTING");
+                    //log("AHTING");
                 }
                 else
                 {
@@ -135,7 +175,7 @@ void GameObjectsLayer::searchCells(Point point)
                         snakeType = itemsSnake.back()->getType();
                     
                     // идем по отделившемуся хвосту змейки и деактивируем бомбы, удаление отменяем
-                    log("index=%d",index);
+                    //log("index=%d",index);
                     Vector<Cell *>::iterator iter;
                     
                     for(int i = (int)itemsSnake.size() - 1; i > index; --i)
@@ -147,10 +187,13 @@ void GameObjectsLayer::searchCells(Point point)
                             if(cellBomb->getWasActivatedByChain())
                                 cellBomb->deactivate();
                         }
-                        log("i=%d itemsSnake.at(i)Type=%d",i,itemsSnake.at(i)->getType());
-                        itemsSnake.at(i)->getInSnakeSprite()->setVisible(false);
+                        //log("i=%d itemsSnake.at(i)Type=%d",i,itemsSnake.at(i)->getType());
+                        
+                        //((CellStacked *)itemsSnake.at(i))->getArrowSprite()->setVisible(false);
+                        
+                        //itemsSnake.at(i)->getInSnakeSprite()->setVisible(false);
                         itemsSnake.at(i)->setShouldDelete(false);
-                        //itemsSnake.at(i)->setState(Normal);
+                        ((CellStacked *)itemsSnake.at(i))->setState(Normal);
                         itemsSnake.erase(i);
                     }
                     
@@ -195,7 +238,15 @@ void GameObjectsLayer::closeSnake()
             {
                 --shouldDeleteCountInColumn;;
                 
-                CellBomb *newCell = (CellBomb *)Cell::create(column, lastCell->getY(), (CellType)Bomb1);
+                
+                CellType cellType;
+                
+                if(itemsSnake.size() >= BombActivation0 && itemsSnake.size() < BombActivation1)
+                    cellType = Bomb0;
+                else if(itemsSnake.size() >= BombActivation1)
+                    cellType = Bomb1;
+                
+                CellBomb *newCell = (CellBomb *)Cell::create(column, lastCell->getY(), cellType);
                 newCell->setDelegate(this);
                 newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + lastCell->getY() * slotSizeHeight));
                 this->addChild(newCell, 0);
@@ -236,8 +287,17 @@ void GameObjectsLayer::closeSnake()
                 {
                     if(i != cell->getY())
                     {
-                        Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight));
-                        cell->runAction(action);
+                        auto action = JumpTo::create(0.35f,  Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight), 0.0f, 1);
+                        
+                        auto action2 = JumpTo::create(0.35f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight), 20.0f, 1);
+                        
+                        
+                        Sequence *sequence = Sequence::createWithTwoActions(action, action2);
+                        
+                        
+                        
+                        //Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + i * slotSizeHeight));
+                        cell->runAction(sequence);
                         cell->setY(i);
                     }
                     
@@ -327,7 +387,7 @@ void GameObjectsLayer::closeSnake()
     //Action *action = JumpTo::create(
     for(auto cell : itemsSnake)
     {
-        cell->setState(Normal);
+        ((CellStacked *)cell)->setState(Normal);
     }
     itemsSnake.clear();
 }
