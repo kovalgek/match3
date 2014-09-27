@@ -72,6 +72,8 @@
 		72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD719C49B7E00A27207 /* GameObjectsLayer.cpp */; };
 		72624ADD19C49B7E00A27207 /* UserInterfaceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624AD919C49B7E00A27207 /* UserInterfaceLayer.cpp */; };
 		72624AE119C4B1E000A27207 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72624ADF19C4B1E000A27207 /* Cell.cpp */; };
+		726CF9AF19D6C35400107E8D /* CellBombSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 726CF9AD19D6C35400107E8D /* CellBombSimple.cpp */; };
+		726CF9B519D6C39200107E8D /* CellBombCross.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 726CF9B319D6C39200107E8D /* CellBombCross.cpp */; };
 		72AAC45919CEF51900EFA5AF /* CellStacked.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC45719CEF51900EFA5AF /* CellStacked.cpp */; };
 		72AAC45E19CEF53200EFA5AF /* CellUnstacked.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC45C19CEF53200EFA5AF /* CellUnstacked.cpp */; };
 		72AAC46119CEF54600EFA5AF /* CellBomb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72AAC45F19CEF54600EFA5AF /* CellBomb.cpp */; };
@@ -292,6 +294,10 @@
 		72624ADF19C4B1E000A27207 /* Cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cell.cpp; path = ../Classes/Cell.cpp; sourceTree = "<group>"; };
 		72624AE019C4B1E000A27207 /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cell.h; path = ../Classes/Cell.h; sourceTree = "<group>"; };
 		72624AE219C5A21C00A27207 /* CellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellDelegate.h; path = ../Classes/CellDelegate.h; sourceTree = "<group>"; };
+		726CF9AD19D6C35400107E8D /* CellBombSimple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellBombSimple.cpp; path = ../Classes/CellBombSimple.cpp; sourceTree = "<group>"; };
+		726CF9AE19D6C35400107E8D /* CellBombSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellBombSimple.h; path = ../Classes/CellBombSimple.h; sourceTree = "<group>"; };
+		726CF9B319D6C39200107E8D /* CellBombCross.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellBombCross.cpp; path = ../Classes/CellBombCross.cpp; sourceTree = "<group>"; };
+		726CF9B419D6C39200107E8D /* CellBombCross.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellBombCross.h; path = ../Classes/CellBombCross.h; sourceTree = "<group>"; };
 		72AAC45719CEF51900EFA5AF /* CellStacked.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellStacked.cpp; path = ../Classes/CellStacked.cpp; sourceTree = "<group>"; };
 		72AAC45819CEF51900EFA5AF /* CellStacked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellStacked.h; path = ../Classes/CellStacked.h; sourceTree = "<group>"; };
 		72AAC45C19CEF53200EFA5AF /* CellUnstacked.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellUnstacked.cpp; path = ../Classes/CellUnstacked.cpp; sourceTree = "<group>"; };
@@ -556,6 +562,7 @@
 		72624ADE19C4B15800A27207 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				726CF9B219D6C35A00107E8D /* Bomb */,
 				72624AE219C5A21C00A27207 /* CellDelegate.h */,
 				72624AE019C4B1E000A27207 /* Cell.h */,
 				72624ADF19C4B1E000A27207 /* Cell.cpp */,
@@ -563,8 +570,6 @@
 				72AAC45719CEF51900EFA5AF /* CellStacked.cpp */,
 				72AAC45C19CEF53200EFA5AF /* CellUnstacked.cpp */,
 				72AAC45D19CEF53200EFA5AF /* CellUnstacked.h */,
-				72AAC46019CEF54600EFA5AF /* CellBomb.h */,
-				72AAC45F19CEF54600EFA5AF /* CellBomb.cpp */,
 				72AAC46219CEF56800EFA5AF /* CellUnmoved.cpp */,
 				72AAC46319CEF56800EFA5AF /* CellUnmoved.h */,
 				72AAC46519CEF5BB00EFA5AF /* CellMoved.cpp */,
@@ -573,6 +578,19 @@
 				72AAC46A19CF32E500EFA5AF /* CellSimple.h */,
 			);
 			name = Objects;
+			sourceTree = "<group>";
+		};
+		726CF9B219D6C35A00107E8D /* Bomb */ = {
+			isa = PBXGroup;
+			children = (
+				72AAC46019CEF54600EFA5AF /* CellBomb.h */,
+				72AAC45F19CEF54600EFA5AF /* CellBomb.cpp */,
+				726CF9AE19D6C35400107E8D /* CellBombSimple.h */,
+				726CF9AD19D6C35400107E8D /* CellBombSimple.cpp */,
+				726CF9B419D6C39200107E8D /* CellBombCross.h */,
+				726CF9B319D6C39200107E8D /* CellBombCross.cpp */,
+			);
+			name = Bomb;
 			sourceTree = "<group>";
 		};
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
@@ -811,8 +829,10 @@
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				72AAC46B19CF32E500EFA5AF /* CellSimple.cpp in Sources */,
 				72AAC45919CEF51900EFA5AF /* CellStacked.cpp in Sources */,
+				726CF9AF19D6C35400107E8D /* CellBombSimple.cpp in Sources */,
 				72624AD319C4999E00A27207 /* GameScene.cpp in Sources */,
 				72AAC45E19CEF53200EFA5AF /* CellUnstacked.cpp in Sources */,
+				726CF9B519D6C39200107E8D /* CellBombCross.cpp in Sources */,
 				72624ADC19C49B7E00A27207 /* GameObjectsLayer.cpp in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 				72624AE119C4B1E000A27207 /* Cell.cpp in Sources */,

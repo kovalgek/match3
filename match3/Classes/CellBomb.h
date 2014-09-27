@@ -13,15 +13,11 @@
 
 class CellBomb : public CellStacked
 {
-    CellBomb *prev;
-    CellBomb *next;
-    
-    Vector<Cell *> activatedItems;
-    
+protected:
     bool activated;
-    bool wasActivatedByChain;
+    Vector<Cell *> activatedItems;
 public:
-    void activate(std::vector<Vector<Cell *>*> *items, Vector<Cell *> *itemsSnake, bool activatedByChain);
+    virtual void activate(std::vector<Vector<Cell *>*> *items, Vector<Cell *> *itemsSnake, bool activatedByChain) = 0;
     void deactivate();
     CC_SYNTHESIZE_READONLY(bool, _wasActivatedByChain, WasActivatedByChain);
 };

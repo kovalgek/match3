@@ -32,7 +32,7 @@ int GameObjectsLayer::minSnakeSizeActivation = 3;
 enum SnakeActivation
 {
     MinSnakeSize = 3,
-    BombActivation0 = 7,
+    BombActivation0 = 4,
     BombActivation1 = 7,
     BombActivation2 = 14
 };
@@ -117,7 +117,9 @@ void GameObjectsLayer::searchCells(Point point)
                         // активация бомб
                         for(Cell *potentialBombCell : itemsSnake)
                         {
-                            if(itemsSnake.size() >= MinSnakeSize && potentialBombCell->getType() == Bomb0)
+                            if(itemsSnake.size() >= MinSnakeSize &&
+                               (potentialBombCell->getType() >= Bomb0 &&
+                                potentialBombCell->getType() <= Bomb2))
                             {
                                 CellBomb *cellBomb = (CellBomb *)potentialBombCell;
                                 cellBomb->activate(&items, &itemsSnake, true);
@@ -138,7 +140,8 @@ void GameObjectsLayer::searchCells(Point point)
                     
                     for(int i = (int)itemsSnake.size() - 1; i > index; --i)
                     {
-                        if(itemsSnake.at(i)->getType() == Bomb0)
+                        if(itemsSnake.at(i)->getType() >= Bomb0 &&
+                           itemsSnake.at(i)->getType() <= Bomb2)
                         {
                             CellBomb *cellBomb = (CellBomb *)itemsSnake.at(i);
                             if(cellBomb->getWasActivatedByChain())
@@ -154,7 +157,9 @@ void GameObjectsLayer::searchCells(Point point)
                     // если в змейке есть бомбы и змейка стала маленькой, то деактивируем их
                     for(Cell *potentialBombCell : itemsSnake)
                     {
-                        if(potentialBombCell->getType() == Bomb0 && itemsSnake.size() < MinSnakeSize)
+                        if((potentialBombCell->getType() >= Bomb0 &&
+                            potentialBombCell->getType() <= Bomb2)
+                           && itemsSnake.size() < MinSnakeSize)
                         {
                             CellBomb *cellBomb = (CellBomb *)potentialBombCell;
                             if(cellBomb->getWasActivatedByChain())
@@ -190,7 +195,7 @@ void GameObjectsLayer::closeSnake()
             {
                 --shouldDeleteCountInColumn;;
                 
-                CellBomb *newCell = (CellBomb *)Cell::create(column, lastCell->getY(), (CellType)Bomb0);
+                CellBomb *newCell = (CellBomb *)Cell::create(column, lastCell->getY(), (CellType)Bomb1);
                 newCell->setDelegate(this);
                 newCell->setPosition(Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + lastCell->getY() * slotSizeHeight));
                 this->addChild(newCell, 0);

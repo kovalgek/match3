@@ -8,7 +8,8 @@
 
 #include "Cell.h"
 #include "CellStacked.h"
-#include "CellBomb.h"
+#include "CellBombSimple.h"
+#include "CellBombCross.h"
 
 USING_NS_CC;
 
@@ -19,8 +20,9 @@ Cell *Cell::create(int x, int y, CellType type)
     if(type >= Bottle0 && type <= Bottle4)
         pRet = new CellStacked();
     else if(type == Bomb0)
-        pRet = new CellBomb();
-    
+        pRet = new CellBombSimple();
+    else if(type == Bomb1)
+        pRet = new CellBombCross();
     
     if (pRet && pRet->init(x, y, type))
     {
