@@ -24,14 +24,38 @@ bool CellStacked::init(int x, int y, CellType type)
     this->addChild(_arrowSprite,0);
     
     char numStr[256];
-    
     if(type >= Bottle0 && type <= Bottle4)
         sprintf(numStr, "bottle%d.png", type);
     else if(type >= Bomb0 && type <= Bomb2)
         sprintf(numStr, "bomb%d.png", type - Bottle4 - 1);
-    
     _mainSprite = Sprite::create(numStr);
-    this->addChild(_mainSprite, 3);
+    this->addChild(_mainSprite, 1);
+    
+    char snakeSpriteName[256];
+    if(type >= Bottle0 && type <= Bottle4)
+    {
+        sprintf(snakeSpriteName, "bottleSnake%d.png", type);
+    }
+    else
+    {
+        sprintf(snakeSpriteName, "Green_cell.png");
+    }
+    _inSnakeSprite = Sprite::create(snakeSpriteName);
+    this->addChild(_inSnakeSprite, 2);
+    _inSnakeSprite->setVisible(false);
+    
+    char snakeSpriteName2[256];
+    if(type >= Bottle0 && type <= Bottle4)
+    {
+        sprintf(snakeSpriteName2, "bottleBombed%d.png", type);
+    }
+    else
+    {
+        sprintf(snakeSpriteName2, "Green_cell.png");
+    }
+    _inSnakeSprite2 = Sprite::create(snakeSpriteName2);
+    this->addChild(_inSnakeSprite2, 3);
+    _inSnakeSprite2->setVisible(false);
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -45,7 +69,7 @@ bool CellStacked::init(int x, int y, CellType type)
         
         if (rect.containsPoint(locationInNode))
         {
-            state = Activated;
+            //state = Activated;
             _shouldDelete = true;
             
             _delegate->activateSnake(this);
@@ -86,16 +110,19 @@ void CellStacked::setState(CellStates var)
     state = var;
     if(state == Activated)
     {
+        //_mainSprite->setVisible(false);
         _inSnakeSprite->setVisible(true);
-        _arrowSprite->setVisible(true);
+        //_arrowSprite->setVisible(true);
     }
     else if(state == Normal)
     {
+        //_mainSprite->setVisible(true);
         _inSnakeSprite->setVisible(false);
+        _inSnakeSprite2->setVisible(false);
         if(_arrowSprite)
         {
             //_arrowSprite->removeFromParent();
-            _arrowSprite->setVisible(false);
+            //_arrowSprite->setVisible(false);
         }
     }
 }

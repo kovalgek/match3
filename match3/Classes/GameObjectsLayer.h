@@ -13,20 +13,16 @@
 #include "Cell.h"
 #include "CellDelegate.h"
 
-USING_NS_CC;
 
-//class Cell;
-//#include "SwitchObjectDelegate.h"
-//#include "CollectObjectDelegate.h"
+USING_NS_CC;
 
 class GameObjectsLayer : public cocos2d::Layer, public CellDelegate
 {
-    //bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     int cellType;
     std::vector<Vector<Cell *>*> items;
     Vector<Cell *> itemsSnake;
     CellType snakeType;
-    //void activateSimpleBomb(bool activate);
+    
     
     virtual void activateSnake(Cell *cell);
     virtual void searchCells(Point point);

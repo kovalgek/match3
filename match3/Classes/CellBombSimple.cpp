@@ -27,12 +27,15 @@ void CellBombSimple::activate(std::vector<Vector<Cell *>*> *items, Vector<Cell *
                 {
                     Cell *cellForBomb = items->at(_x + columnShift)->at(_y + rowShift);
                     
-                    if(!itemsSnake->contains(cellForBomb) && !cellForBomb->getWillExplodeSprite()->isVisible())
+                    if(!cellForBomb->getWillExplodeSprite()->isVisible())
                     {
                         if(cellForBomb->getType() >= Bottle0 && cellForBomb->getType() <= Bottle4)
                         {
                             log("activate near bomb bottles %d %d",cellForBomb->getX(),cellForBomb->getY());
-                            activatedItems.pushBack(cellForBomb);
+                            
+                            //if(!itemsSnake->contains(cellForBomb))
+                                activatedItems.pushBack(cellForBomb);
+                            
                             
                             cellForBomb->setShouldDelete(true);
                             cellForBomb->getWillExplodeSprite()->setVisible(true);

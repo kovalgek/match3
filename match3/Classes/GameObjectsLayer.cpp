@@ -10,6 +10,8 @@
 #include "Cell.h"
 #include "CellSimple.h"
 #include "CellBomb.h"
+#include "GameScene.h"
+#include "Hero.h"
 /*
 #include "Hero.h"
 #include "RootScene.h"
@@ -73,11 +75,15 @@ bool GameObjectsLayer ::init()
         items.push_back(line);
     }
     
+
+    
     return true;
 }
 
 void GameObjectsLayer::activateSnake(Cell *cell)
 {
+    ((CellStacked *)cell)->setState(Activated);
+    
     cell->setLocalZOrder(100);
     itemsSnake.pushBack(cell);
     snakeType = cell->getType();
@@ -149,9 +155,19 @@ void GameObjectsLayer::searchCells(Point point)
                         
                         
                         ((CellStacked *)cell)->setState(Activated);
+                        ((CellStacked *)cell)->getArrowSprite()->setVisible(true);
                         
                         
                         itemsSnake.pushBack(cell);
+                        
+                        
+                        if(itemsSnake.size() >= MinSnakeSize)
+                        {
+                            for(Cell *potentialBombCell : itemsSnake)
+                            {
+                                ((CellStacked *)potentialBombCell)->getInSnakeSprite2()->setVisible(true);
+                            }
+                        }
                         
                         // активация бомб
                         for(Cell *potentialBombCell : itemsSnake)
@@ -185,7 +201,7 @@ void GameObjectsLayer::searchCells(Point point)
                         {
                             CellBomb *cellBomb = (CellBomb *)itemsSnake.at(i);
                             if(cellBomb->getWasActivatedByChain())
-                                cellBomb->deactivate();
+                                cellBomb->deactivate(&itemsSnake);
                         }
                         //log("i=%d itemsSnake.at(i)Type=%d",i,itemsSnake.at(i)->getType());
                         
@@ -194,6 +210,7 @@ void GameObjectsLayer::searchCells(Point point)
                         //itemsSnake.at(i)->getInSnakeSprite()->setVisible(false);
                         itemsSnake.at(i)->setShouldDelete(false);
                         ((CellStacked *)itemsSnake.at(i))->setState(Normal);
+                        ((CellStacked *)itemsSnake.at(i))->getArrowSprite()->setVisible(false);
                         itemsSnake.erase(i);
                     }
                     
@@ -206,7 +223,15 @@ void GameObjectsLayer::searchCells(Point point)
                         {
                             CellBomb *cellBomb = (CellBomb *)potentialBombCell;
                             if(cellBomb->getWasActivatedByChain())
-                                cellBomb->deactivate();
+                                cellBomb->deactivate(&itemsSnake);
+                        }
+                    }
+                    
+                    if(itemsSnake.size() < MinSnakeSize)
+                    {
+                        for(Cell *potentialBombCell : itemsSnake)
+                        {
+                            ((CellStacked *)potentialBombCell)->getInSnakeSprite2()->setVisible(false);
                         }
                     }
                 }
@@ -308,86 +333,14 @@ void GameObjectsLayer::closeSnake()
         }
     }
     
-    //log("AHT");
-    for(int column = 0; column < slotsWidth; ++column)
-    {
-        for(Cell *cell : *items.at(column))
-        {
-            //log("x=%d y=%d",cell->getX(),cell->getY());
-        }
-        //log("\n");
-    }
-    /*
-    return;
-    for(int column = 0; column < slotsWidth; ++column)
-    {
-        int emptySpaceCount = 0;
-        bool turnOnSequence = false;
-        int sumEmptySpaces = 0;
-        
-        for(int row = 0; row < items.at(column)->size(); ++row)
-        {
-            Cell *cell = items.at(column)->at(row);
-            
-            if(!cell->getShouldDelete())// || row == slotsHeight - 1)
-            {
-                if(emptySpaceCount)
-                {
-                    if(!turnOnSequence)
-                    {
-                        
-                        for(int i = row - emptySpaceCount; i < row; ++i)
-                        {
-                            log("remove at %d %d",i, column);
-                            
-                            Cell *cellForRemove = items.at(column)->at(i);
-                            cellForRemove->removeFromParent();
-  
-                        }
-                        
-                        turnOnSequence = true;
-                    }
-                    if(turnOnSequence)
-                    {
-                        Cell *cellForMove = items.at(column)->at(row);
-                        cellForMove->setX(column);
-                        cellForMove->setY(row - emptySpaceCount - sumEmptySpaces);
-                        
-                        Action *action = MoveTo::create(0.3f, Point(slotShiftLeft + slotSizeWidth * column, slotShiftBottom + (row - emptySpaceCount - sumEmptySpaces) * slotSizeHeight));
-                        cellForMove->runAction(action);
-                        items.at(column)->replace(row - emptySpaceCount - sumEmptySpaces, cellForMove);
-                        
-                        log("move %d to %d %d %d",cellForMove->getType() , row - emptySpaceCount, column, cellForMove->getShouldDelete());
-                    }
-                }
-            }
-            else
-            {
-                if(turnOnSequence)
-                {
-                    turnOnSequence = false;
-                    sumEmptySpaces += emptySpaceCount;
-                    emptySpaceCount = 0;
-                }
-                ++emptySpaceCount;
-                
-            }
-        }
-    }
     
-    for(int column = 0; column < slotsWidth; ++column)
-    {
-        for(int row = (int)items.at(column)->size() - 1; row >= slotsHeight ; --row)
-        {
-            log("delete at row =%d column = %d",row,column);
-            items.at(column)->erase(row);
-        }
-    }
-    */
-    //Action *action = JumpTo::create(
+    //Hero *hero = GameScene::getInstance()->getHero();
+    //hero->setRage(hero->getRage() + itemsSnake.size() * 5);
+    
     for(auto cell : itemsSnake)
     {
         ((CellStacked *)cell)->setState(Normal);
+        ((CellStacked *)cell)->getArrowSprite()->setVisible(false);
     }
     itemsSnake.clear();
 }

@@ -16,8 +16,9 @@ class CellStacked : public Cell
 public:
     virtual bool init(int x, int y, CellType type);
     CC_SYNTHESIZE(CellDelegate *, _delegate, Delegate);
-    
     CC_SYNTHESIZE(Sprite *, _arrowSprite, ArrowSprite);
+    CC_SYNTHESIZE_READONLY(Sprite *, _inSnakeSprite, InSnakeSprite);
+    CC_SYNTHESIZE_READONLY(Sprite *, _inSnakeSprite2, InSnakeSprite2);
     
     void setState(CellStates var);
     CellStates getState();

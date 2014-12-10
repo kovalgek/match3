@@ -52,11 +52,7 @@ bool Cell::init(int x, int y, CellType type)
     _willExplodeSprite = Sprite::create("Selected_cell.png");
     this->addChild(_willExplodeSprite, 1);
     _willExplodeSprite->setVisible(false);
-    
-    _inSnakeSprite = Sprite::create("Green_cell.png");
-    _inSnakeSprite->setOpacity(128);
-    this->addChild(_inSnakeSprite, 2);
-    _inSnakeSprite->setVisible(false);
+
     
     char qwe[256];
     sprintf(qwe, "%d,%d", _x,_y);

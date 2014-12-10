@@ -42,7 +42,7 @@ public:
     virtual bool init(int x, int y, CellType type);
 
     CC_SYNTHESIZE_READONLY(Sprite *, _mainSprite, MainSprite);
-    CC_SYNTHESIZE_READONLY(Sprite *, _inSnakeSprite, InSnakeSprite);
+    
     CC_SYNTHESIZE_READONLY(Sprite *, _willExplodeSprite, WillExplodeSprite);
     
     CC_SYNTHESIZE(int, _x, X);

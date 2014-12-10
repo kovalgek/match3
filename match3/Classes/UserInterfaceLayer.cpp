@@ -7,6 +7,7 @@
 //
 
 #include "UserInterfaceLayer.h"
+#include "GameScene.h"
 //#include "Inventory.h"
 
 //#include "RootScene.h"
@@ -34,29 +35,95 @@ bool UserInterfaceLayer::init()
     topSprite->setPosition(Point(visibleSize.width/2 + origin.x,  visibleSize.height - origin.y - topSprite->getContentSize().height/2));
     this->addChild(topSprite, 0);
     
+    
     /*
-    Layout *layout = Layout::create();
-    layout->setSize(visibleSize);
-    layout->setClippingEnabled(true);
-    layout->setLayoutType(LAYOUT_RELATIVE);
-    this->addChild(layout);
+    Hero *hero = GameScene::getInstance()->getHero();
     
-    Button *button = Button::create();
-    button->setTouchEnabled(true);
-    button->loadTextures("inventoryIcon.png", "inventoryIcon.png", "");
-    button->setScale(0.3f);
-    button->addTouchEventListener(this, toucheventselector(UserInterfaceLayer::touchEvent));
-    layout->addChild(button);
+    char heroHealth[256];
+    sprintf(heroHealth, "%d/%d", hero->getHealth(), hero->getMaxHealth());
+    labelHeroHealth = Label::createWithBMFont("font.fnt", heroHealth);
+    labelHeroHealth->setPosition(Point(155,85));
+    topSprite->addChild(labelHeroHealth,2);
     
-    RelativeLayoutParameter *rp1 = RelativeLayoutParameter::create();
-    rp1->setMargin(Margin(-30, -30, 0, 0));
-    rp1->setAlign(RELATIVE_ALIGN_PARENT_TOP_LEFT);
-    button->setLayoutParameter(rp1);
+    char damageHero[256];
+    sprintf(damageHero, "Damage:%d", hero->getDamage());
+    labelHeroDamage = Label::createWithBMFont("font.fnt", damageHero);
+    labelHeroDamage->setScale(0.7f);
+    labelHeroDamage->setPosition(Point(100,30));
+    topSprite->addChild(labelHeroDamage,2);
     
-    _inventory = Inventory::create();
-    this->addChild(_inventory);
-*/
+    char rageHero[256];
+    sprintf(rageHero, "Rage:%d", hero->getDamage());
+    labelHeroRage = Label::createWithBMFont("font.fnt", rageHero);
+    labelHeroRage->setScale(0.7f);
+    labelHeroRage->setPosition(Point(100,10));
+    topSprite->addChild(labelHeroRage,2);
+    
+    
+    Enemy *enemy = GameScene::getInstance()->getEnemy();
+    
+    char enemyHealth[256];
+    sprintf(enemyHealth, "%d/%d", enemy->getHealth(), enemy->getMaxHealth());
+    auto labelEnemyHealth = Label::createWithBMFont("font.fnt", enemyHealth);
+    labelEnemyHealth->setPosition(Point(visibleSize.width - 150,85));
+    topSprite->addChild(labelEnemyHealth,2);
+    
+    char damageEnemy[256];
+    sprintf(damageEnemy, "Damage:%d", enemy->getDamage());
+    auto labelEnemyDamage = Label::createWithBMFont("font.fnt", damageEnemy);
+    labelEnemyDamage->setScale(0.7f);
+    labelEnemyDamage->setPosition(Point(visibleSize.width - 100,30));
+    topSprite->addChild(labelEnemyDamage,2);
+    
+    char frequencyEnemy[256];
+    sprintf(frequencyEnemy, "%d", enemy->getFrequency());
+    auto labelEnemyFrequency = Label::createWithBMFont("font.fnt", frequencyEnemy);
+    labelEnemyFrequency->setScale(1.5f);
+    labelEnemyFrequency->setPosition(Point(visibleSize.width/2,90));
+    topSprite->addChild(labelEnemyFrequency,2);
+    */
     return true;
+}
+
+void UserInterfaceLayer::updateInterface()
+{
+    Hero *hero = GameScene::getInstance()->getHero();
+    
+    char heroHealth[256];
+    sprintf(heroHealth, "%d/%d", hero->getHealth(), hero->getMaxHealth());
+    labelHeroHealth->setString(heroHealth);
+    
+    char damageHero[256];
+    sprintf(damageHero, "Damage:%d", hero->getDamage());
+    labelHeroDamage->setString(damageHero);
+    
+    char rageHero[256];
+    sprintf(rageHero, "Rage:%d", hero->getDamage());
+    labelHeroRage->setString(rageHero);
+    
+    /*
+    Enemy *enemy = GameScene::getInstance()->getEnemy();
+    
+    char enemyHealth[256];
+    sprintf(enemyHealth, "%d/%d", enemy->getHealth(), enemy->getMaxHealth());
+    auto labelEnemyHealth = Label::createWithBMFont("font.fnt", enemyHealth);
+    labelEnemyHealth->setPosition(Point(visibleSize.width - 150,85));
+    topSprite->addChild(labelEnemyHealth,2);
+    
+    char damageEnemy[256];
+    sprintf(damageEnemy, "Damage:%d", enemy->getDamage());
+    auto labelEnemyDamage = Label::createWithBMFont("font.fnt", damageEnemy);
+    labelEnemyDamage->setScale(0.7f);
+    labelEnemyDamage->setPosition(Point(visibleSize.width - 100,30));
+    topSprite->addChild(labelEnemyDamage,2);
+    
+    char frequencyEnemy[256];
+    sprintf(frequencyEnemy, "%d", enemy->getFrequency());
+    auto labelEnemyFrequency = Label::createWithBMFont("font.fnt", frequencyEnemy);
+    labelEnemyFrequency->setScale(1.5f);
+    labelEnemyFrequency->setPosition(Point(visibleSize.width/2,90));
+    topSprite->addChild(labelEnemyFrequency,2);
+     */
 }
 
 /*

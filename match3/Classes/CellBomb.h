@@ -18,7 +18,7 @@ protected:
     Vector<Cell *> activatedItems;
 public:
     virtual void activate(std::vector<Vector<Cell *>*> *items, Vector<Cell *> *itemsSnake, bool activatedByChain) = 0;
-    void deactivate();
+    void deactivate(Vector<Cell *> *itemsSnake);
     CC_SYNTHESIZE_READONLY(bool, _wasActivatedByChain, WasActivatedByChain);
 };
 

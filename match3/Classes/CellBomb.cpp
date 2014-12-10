@@ -9,7 +9,7 @@
 #include "CellBomb.h"
 
 
-void CellBomb::deactivate()
+void CellBomb::deactivate(Vector<Cell *> *itemsSnake)
 {
     //log("Deactivate bomb %d %d activated=%d",_x,_y, activated);
     
@@ -20,15 +20,17 @@ void CellBomb::deactivate()
         
         for(Cell *cell : activatedItems)
         {
-            cell->setShouldDelete(false);
-            cell->getWillExplodeSprite()->setVisible(false);
+            if(!itemsSnake->contains(cell))
+                cell->setShouldDelete(false);
             
+            cell->getWillExplodeSprite()->setVisible(false);
+                
             // деактивация других бомб
             if(cell->getType() >= Bomb0 && cell->getType() <= Bomb2)
             {
                 if(!((CellBomb *)cell)->getWasActivatedByChain())
                 {
-                    ((CellBomb *)cell)->deactivate();
+                    ((CellBomb *)cell)->deactivate(itemsSnake);
                 }
                 //log("Deactivate cell who bomb %d %d byChain=%d",cell->getX(),cell->getY(),((CellBomb *)cell)->getWasActivatedByChain());
             }
@@ -37,8 +39,6 @@ void CellBomb::deactivate()
                 //log("Deactivate cell %d %d",cell->getX(),cell->getY());
             }
         }
-        
         activatedItems.clear();
-        //log("counr=%d",activatedItems.size());
     }
 }
